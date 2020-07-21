@@ -1,30 +1,31 @@
 import constants
+import copy
 
-theteams = constants.TEAMS.copy()
-theplayers = constants.PLAYERS.copy()
+theteams = copy.deepcopy(constants.TEAMS)
+theplayers = copy.deepcopy(constants.PLAYERS)
 expplayers = []
 nonexpplayers = []
 database = []
 allthreeteams = []
 
-def clean_data(dataset):
+def clean_data():
     # method to clean dataset to remove yes and no to booleans true or false and turn height to integers from string type
-    for players in dataset:
-        if players['experience'] == 'YES':
-            players['experience'] = True
-            heightchange = players['height'].split()
-            players['height'] = int(heightchange[0])
+    for player in theplayers:
+        if player['experience'] == 'YES':
+            player['experience'] = True
+            heightchange = player['height'].split()
+            player['height'] = int(heightchange[0])
                                     
-        if players['experience'] == 'NO':
-            players['experience'] = False                          
-            heightchange = players['height'].split()
-            players['height'] = int(heightchange[0])
-    return dataset
+        if player['experience'] == 'NO':
+            player['experience'] = False                          
+            heightchange = player['height'].split()
+            player['height'] = int(heightchange[0])
+    
 
   
-def split_players(cleaned_data):
+def split_players():
     # split players into two groups, experienced and inexperienced
-    for each_player in cleaned_data:
+    for each_player in theplayers:
         if each_player["experience"] == True:
             expplayers.append(each_player)
             
@@ -32,7 +33,7 @@ def split_players(cleaned_data):
             nonexpplayers.append(each_player)
 
             
-def divide_players(expplayers, nonexpplayers):
+def divide_players():
     # divided players equally into a new collection (list)
     while expplayers and nonexpplayers:
         database.append(expplayers.pop(0))
@@ -40,14 +41,16 @@ def divide_players(expplayers, nonexpplayers):
     
 # divided the players in three groups with equal ability
 
-def team_sort(database):
+def team_sort():
     for team in theteams:
 	      allthreeteams.append(team.split())
     for each in allthreeteams:
         each.append(database[:6])
         del database[:6]
 
-        
+
+# functions to show basketball stats
+
 def team_name(option_two):
     # display team name
     print("===========================")
@@ -115,19 +118,20 @@ def show_team_stat(option_two):
     number_of_inexperienced_players(option_two)                                
     players_guardians(option_two)
 
-cleaned_data = clean_data(theplayers)
+clean_data()
 
-split_players(cleaned_data)
+split_players()
 
-divide_players(expplayers, nonexpplayers)
+divide_players()
 
-team_sort(database)
+team_sort()
 
 
 print("++++++++++++++++++++++++++++++++++++++")
 print("      basketball teams stats tool".upper())
 print("++++++++++++++++++++++++++++++++++++++\n")
 print("=================MENU=================\n")
+
 
 while True:  
     try:
@@ -182,3 +186,9 @@ while True:
 print("\nthank you for using the program, GOODBYE\n".upper())
 
 
+if __name__ == "__main__":
+    cleaned_data = clean_data()
+    split_players()
+    divide_players()
+    team_sort()
+	
