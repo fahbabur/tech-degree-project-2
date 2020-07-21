@@ -187,8 +187,9 @@ print("\nthank you for using the program, GOODBYE\n".upper())
 
 
 if __name__ == "__main__":
-    cleaned_data = clean_data()
+    clean_data()
     split_players()
     divide_players()
     team_sort()
+	
 	
